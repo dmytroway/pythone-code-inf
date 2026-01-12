@@ -12,6 +12,22 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% for imp in dynamics.notes.head %}
       {% include imp %}
     {% endfor %}
+
+    <style>
+      /* Цей блок розтягує контент на всю ширину */
+      body {
+          --line-width: 1400px !important; /* Максимальна ширина тексту */
+          --line-width-adaptive: 1400px !important;
+      }
+      
+      main.content {
+          max-width: 1400px !important; /* Примусово розширюємо */
+          padding-left: 30px !important; /* Акуратний відступ зліва */
+          padding-right: 30px !important; /* Акуратний відступ справа */
+          width: 100% !important;
+          margin: 0 auto !important;
+      }
+    </style>
   </head>
 
   <body class="theme-{{meta.baseTheme}} markdown-preview-view markdown-rendered markdown-preview-section {{meta.bodyClasses}}">
@@ -19,7 +35,7 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {%include "components/notegrowthhistory.njk"%}
     
     <nav class="file-tree-sidebar">
-        <div style="padding: 15px 20px 5px 20px; font-weight: bold; font-size: 1.2em; border-bottom: 1px solid var(--background-modifier-border);">
+        <div style="padding: 15px 20px 10px 20px; font-weight: bold; font-size: 1.2em; border-bottom: 1px solid var(--background-modifier-border);">
              <a href="/" style="text-decoration: none; color: var(--text-normal);">
                 {{meta.siteName}}
              </a>
