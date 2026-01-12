@@ -14,4 +14,122 @@ body {
 .mermaid .edgePath .path {
     stroke: #333 !important;
 }
+ /* =======================================================
+   НАЛАШТУВАННЯ CALLOUTS (Точні кольори з Obsidian)
+   ======================================================= */
+
+/* --- ЗАГАЛЬНІ НАЛАШТУВАННЯ ДЛЯ ЦИХ БЛОКІВ --- */
+/* Приховуємо стандартну іконку, щоб замінити на свою */
+.callout[data-callout="term"] .callout-icon svg,
+.callout[data-callout="teorema"] .callout-icon svg,
+.callout[data-callout="video"] .callout-icon svg,
+.callout[data-callout="formula"] .callout-icon svg,
+.callout[data-callout="light-purple"] .callout-icon svg,
+.callout[data-callout="light-yellow"] .callout-icon svg,
+.callout[data-callout="light-green"] .callout-icon svg {
+    display: none !important;
+}
+
+/* Вирівнюємо нові іконки */
+.callout-icon {
+    font-style: normal;
+    font-size: 1.1em;
+    margin-right: 5px;
+    align-self: center;
+}
+
+/* 1. TERM (Термін) - Колір #99b1cc */
+.callout[data-callout="term"] {
+    border-left-color: #99b1cc !important;
+    background-color: rgba(153, 177, 204, 0.15) !important; /* Напівпрозорий фон */
+}
+.callout[data-callout="term"] .callout-title {
+    color: #99b1cc !important; /* Колір заголовку */
+}
+.callout[data-callout="term"] .callout-icon::before {
+    content: "📖"; /* Книга */
+}
+
+/* 2. TEOREMA (Теорема) - Колір #f4c96c */
+.callout[data-callout="teorema"] {
+    border-left-color: #f4c96c !important;
+    background-color: rgba(244, 201, 108, 0.15) !important;
+}
+.callout[data-callout="teorema"] .callout-title {
+    color: #cda43b !important; /* Трохи темніший для читабельності тексту */
+}
+.callout[data-callout="teorema"] .callout-icon::before {
+    content: "📙"; /* Помаранчева книга */
+}
+
+/* 3. VIDEO (Відео) - Колір #f8aaea */
+.callout[data-callout="video"] {
+    border-left-color: #f8aaea !important;
+    background-color: rgba(248, 170, 234, 0.15) !important;
+}
+.callout[data-callout="video"] .callout-title {
+    color: #d67ac5 !important;
+}
+.callout[data-callout="video"] .callout-icon::before {
+    content: "📹"; /* Камера */
+}
+
+/* 4. FORMULA (Формула) - Колір #5059d7 */
+.callout[data-callout="formula"] {
+    border-left-color: #5059d7 !important;
+    background-color: rgba(80, 89, 215, 0.15) !important;
+}
+.callout[data-callout="formula"] .callout-title {
+    color: #5059d7 !important;
+}
+.callout[data-callout="formula"] .callout-icon::before {
+    content: "⚠️"; /* Знак уваги (badge-alert) */
+}
+
+/* 5. LIGHT-PURPLE (Фіолетовий) - Колір #c580e5 */
+.callout[data-callout="light-purple"] {
+    border-left-color: #c580e5 !important;
+    background-color: rgba(197, 128, 229, 0.15) !important;
+}
+.callout[data-callout="light-purple"] .callout-title {
+    color: #aa5dcb !important;
+}
+.callout[data-callout="light-purple"] .callout-icon::before {
+    content: "📝"; /* Листок з текстом */
+}
+
+/* 6. LIGHT-YELLOW (Жовтий) - Колір #eaf093 */
+.callout[data-callout="light-yellow"] {
+    border-left-color: #eaf093 !important;
+    background-color: rgba(234, 240, 147, 0.3) !important; /* Трохи насиченіший фон, бо жовтий дуже світлий */
+}
+.callout[data-callout="light-yellow"] .callout-title {
+    color: #8f9600 !important; /* Темніший жовтий для тексту, щоб очі не боліли */
+}
+.callout[data-callout="light-yellow"] .callout-icon::before {
+    content: "📝"; /* Листок з текстом */
+}
+
+/* 7. LIGHT-GREEN (Зелений) - Колір #9de798 */
+.callout[data-callout="light-green"] {
+    border-left-color: #9de798 !important;
+    background-color: rgba(157, 231, 152, 0.2) !important;
+}
+.callout[data-callout="light-green"] .callout-title {
+    color: #4caf50 !important; /* Нормальний зелений для тексту */
+}
+.callout[data-callout="light-green"] .callout-icon::before {
+    content: "📝"; /* Листок з текстом */
+}
+
+/* Корекція кольору тексту всередині блоків (щоб завжди був чорним/темно-сірим для читабельності) */
+.callout[data-callout="term"],
+.callout[data-callout="teorema"],
+.callout[data-callout="video"],
+.callout[data-callout="formula"],
+.callout[data-callout="light-purple"],
+.callout[data-callout="light-yellow"],
+.callout[data-callout="light-green"] {
+    color: #222 !important;
+}
 }
