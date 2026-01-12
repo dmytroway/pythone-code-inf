@@ -12,39 +12,21 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% for imp in dynamics.notes.head %}
       {% include imp %}
     {% endfor %}
-    
-    <style>
-        /* Робимо контент ширшим і зменшуємо пустий відступ зліва */
-        main.content {
-            max-width: 1400px !important; /* Розширюємо область тексту */
-            margin-left: 0 !important;
-            padding-left: 40px !important; /* Акуратний відступ від лівого меню */
-        }
-        
-        /* Стиль для повернутої шапки сайту в лівому меню */
-        .site-header-custom {
-            padding: 20px;
-            font-size: 1.5em;
-            font-weight: bold;
-            border-bottom: 1px solid var(--background-modifier-border);
-            margin-bottom: 10px;
-        }
-        .site-header-custom a {
-            text-decoration: none;
-            color: var(--text-normal);
-        }
-    </style>
   </head>
 
   <body class="theme-{{meta.baseTheme}} markdown-preview-view markdown-rendered markdown-preview-section {{meta.bodyClasses}}">
+    
     {%include "components/notegrowthhistory.njk"%}
     
-    <div style="display: flex; flex-direction: column; height: 100%;">
-        <div class="site-header-custom">
-             <a href="/">{{meta.siteName}}</a>
+    <nav class="file-tree-sidebar">
+        <div style="padding: 15px 20px 5px 20px; font-weight: bold; font-size: 1.2em; border-bottom: 1px solid var(--background-modifier-border);">
+             <a href="/" style="text-decoration: none; color: var(--text-normal);">
+                {{meta.siteName}}
+             </a>
         </div>
+        
         {%include "components/filetree.njk"%}
-    </div>
+    </nav>
 
     {% if settings.dgEnableSearch === true %}
       {%include "components/searchContainer.njk"%}
