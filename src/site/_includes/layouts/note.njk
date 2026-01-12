@@ -14,64 +14,70 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% endfor %}
 
     <style>
-      /* --- 1. АГРЕСИВНЕ ПРИХОВУВАННЯ МЕНЮ --- */
-      /* Цей контейнер буде виїжджати зліва */
+      /* --- 1. СТИЛІ МЕНЮ --- */
       #slide-out-menu {
           position: fixed;
           top: 0;
           left: 0;
-          width: 300px;
-          height: 100vh; /* На всю висоту екрана */
+          width: 320px; /* Трохи ширше меню для зручності */
+          height: 100vh;
           background-color: var(--background-primary);
           border-right: 1px solid var(--background-modifier-border);
-          z-index: 9999; /* Поверх усього */
+          z-index: 9999;
           
-          /* КЛЮЧОВИЙ МОМЕНТ: Ховаємо меню за межі екрана */
+          /* Анімація виїзду */
           transform: translateX(-100%); 
           transition: transform 0.3s ease-in-out;
           
-          overflow-y: auto; /* Прокрутка всередині меню */
-          padding-top: 60px; /* Відступ під кнопку закриття/відкриття */
-          box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+          overflow-y: auto;
+          box-shadow: 2px 0 15px rgba(0,0,0,0.3);
+
+          /* --- НАЛАШТУВАННЯ ВІДСТУПІВ ВСЕРЕДИНІ МЕНЮ --- */
+          /* 80px зверху (щоб не перекривати кнопку) */
+          /* 25px зліва і справа (повітря для тексту) */
+          padding: 80px 25px 20px 25px; 
+          
+          /* Щоб відступи не збільшували загальну ширину блоку */
+          box-sizing: border-box; 
       }
 
-      /* Клас, який додає JS, щоб показати меню */
       #slide-out-menu.is-visible {
           transform: translateX(0);
       }
 
-      /* --- 2. КНОПКА МЕНЮ (Завжди зверху зліва) --- */
+      /* --- 2. КНОПКА МЕНЮ --- */
       #menu-toggle-btn {
           position: fixed;
-          top: 15px;
-          left: 15px;
-          z-index: 10000; /* Вище ніж саме меню */
+          top: 20px;
+          left: 20px;
+          z-index: 10000; /* Кнопка завжди зверху */
           background: var(--background-secondary);
           color: var(--text-normal);
           border: 1px solid var(--background-modifier-border);
-          padding: 8px 12px;
-          border-radius: 5px;
+          padding: 8px 15px;
+          border-radius: 8px; /* Більш округла кнопка */
           cursor: pointer;
           font-weight: bold;
+          font-size: 14px;
           display: flex;
           align-items: center;
-          gap: 5px;
+          gap: 8px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
       }
       #menu-toggle-btn:hover {
           background: var(--background-modifier-hover);
       }
 
-      /* --- 3. ЦЕНТРУВАННЯ ТЕКСТУ (Щоб не було дірок зліва) --- */
+      /* --- 3. ЦЕНТРУВАННЯ ТЕКСТУ ЗАМІТКИ --- */
       body {
-          /* Скидаємо стандартну сітку, щоб вона не чекала на меню */
           display: block !important; 
       }
       
       main.content {
-          margin: 0 auto !important; /* Центруємо блок тексту */
-          max-width: 900px !important; /* Зручна ширина для читання */
+          margin: 0 auto !important; 
+          max-width: 900px !important; 
           width: 90% !important;
-          padding-top: 60px !important; /* Щоб текст не ліз під кнопку меню */
+          padding-top: 80px !important; /* Відступ зверху, щоб текст не починався під кнопкою */
       }
 
       /* --- 4. ЗАТЕМНЕННЯ ФОНУ --- */
@@ -79,22 +85,26 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
           display: none;
           position: fixed;
           top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(0,0,0,0.5);
+          background: rgba(0,0,0,0.6); /* Трохи темніше */
           z-index: 9998;
-          backdrop-filter: blur(2px);
+          backdrop-filter: blur(3px); /* Ефект розмиття фону */
       }
       #menu-overlay.active {
           display: block;
       }
 
-      /* Стиль заголовка в меню */
+      /* Стиль заголовка "Курс Python" в меню */
       .menu-site-header {
-          padding: 10px 20px;
-          font-size: 1.2em;
+          margin-bottom: 20px; /* Відступ від назви до папок */
+          padding-bottom: 10px;
+          font-size: 1.4em;
           font-weight: bold;
-          border-bottom: 1px solid var(--background-modifier-border);
+          border-bottom: 2px solid var(--text-accent); /* Кольорова лінія під назвою */
       }
-      .menu-site-header a { text-decoration: none; color: var(--text-normal); }
+      .menu-site-header a { 
+          text-decoration: none; 
+          color: var(--text-normal); 
+      }
     </style>
   </head>
 
@@ -168,8 +178,6 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
         function toggleMenu() {
             const menu = document.getElementById('slide-out-menu');
             const overlay = document.getElementById('menu-overlay');
-            
-            // Перемикаємо класи
             if (menu.classList.contains('is-visible')) {
                 menu.classList.remove('is-visible');
                 overlay.classList.remove('active');
