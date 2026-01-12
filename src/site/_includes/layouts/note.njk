@@ -12,11 +12,39 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% for imp in dynamics.notes.head %}
       {% include imp %}
     {% endfor %}
+    
+    <style>
+        /* Робимо контент ширшим і зменшуємо пустий відступ зліва */
+        main.content {
+            max-width: 1400px !important; /* Розширюємо область тексту */
+            margin-left: 0 !important;
+            padding-left: 40px !important; /* Акуратний відступ від лівого меню */
+        }
+        
+        /* Стиль для повернутої шапки сайту в лівому меню */
+        .site-header-custom {
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-bottom: 1px solid var(--background-modifier-border);
+            margin-bottom: 10px;
+        }
+        .site-header-custom a {
+            text-decoration: none;
+            color: var(--text-normal);
+        }
+    </style>
   </head>
+
   <body class="theme-{{meta.baseTheme}} markdown-preview-view markdown-rendered markdown-preview-section {{meta.bodyClasses}}">
     {%include "components/notegrowthhistory.njk"%}
     
-    {%include "components/filetree.njk"%}
+    <div style="display: flex; flex-direction: column; height: 100%;">
+        <div class="site-header-custom">
+             <a href="/">{{meta.siteName}}</a>
+        </div>
+        {%include "components/filetree.njk"%}
+    </div>
 
     {% if settings.dgEnableSearch === true %}
       {%include "components/searchContainer.njk"%}
@@ -39,6 +67,7 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
               {% endfor %}
             </div>
           {% endif %}
+          
           {%- if meta.timestampSettings.showCreated or meta.timestampSettings.showUpdated -%}
           <div class="timestamps">
             {%- if meta.timestampSettings.showCreated and created -%}
@@ -50,6 +79,7 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
           </div>
           {%- endif -%}
         </div>
+      
       {% for imp in dynamics.common.header %}
         {% include imp %}
       {% endfor %}
@@ -57,13 +87,16 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
         {% include imp %}
       {% endfor %}
       </header>
+      
       {% for imp in dynamics.common.beforeContent %}
         {% include imp %}
       {% endfor %}
       {% for imp in dynamics.notes.beforeContent %}
         {% include imp %}
       {% endfor %}
+      
       {{ content | hideDataview | taggify | link | safe}}
+      
       {% for imp in dynamics.common.afterContent %}
         {% include imp %}
       {% endfor %}
