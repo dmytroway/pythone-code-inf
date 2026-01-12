@@ -15,11 +15,10 @@ body {
     stroke: #333 !important;
 }
  /* =======================================================
-   НАЛАШТУВАННЯ CALLOUTS (Точні кольори з Obsidian)
+   ОБЕРЕЖНИЙ ДИЗАЙН CALLOUTS (СТИЛЬ OBSIDIAN)
    ======================================================= */
 
-/* --- ЗАГАЛЬНІ НАЛАШТУВАННЯ ДЛЯ ЦИХ БЛОКІВ --- */
-/* Приховуємо стандартну іконку, щоб замінити на свою */
+/* 1. Скидання стандартних іконок для твоїх типів блоків */
 .callout[data-callout="term"] .callout-icon svg,
 .callout[data-callout="teorema"] .callout-icon svg,
 .callout[data-callout="video"] .callout-icon svg,
@@ -30,106 +29,109 @@ body {
     display: none !important;
 }
 
-/* Вирівнюємо нові іконки */
+/* Налаштування для нових іконок */
 .callout-icon {
     font-style: normal;
+    margin-right: 8px;
     font-size: 1.1em;
-    margin-right: 5px;
-    align-self: center;
+    line-height: 1;
 }
 
-/* 1. TERM (Термін) - Колір #99b1cc */
+/* 2. НАЛАШТУВАННЯ КОЛЬОРІВ (HEX переведені в RGBA для прозорості) */
+
+/* --- TERM (#99b1cc) --- */
 .callout[data-callout="term"] {
-    border-left-color: #99b1cc !important;
-    background-color: rgba(153, 177, 204, 0.15) !important; /* Напівпрозорий фон */
+    /* Колір #99b1cc з прозорістю 10% */
+    background-color: rgba(153, 177, 204, 0.1) !important;
+    border-left: 4px solid #99b1cc !important;
 }
 .callout[data-callout="term"] .callout-title {
-    color: #99b1cc !important; /* Колір заголовку */
+    color: #99b1cc !important;
 }
 .callout[data-callout="term"] .callout-icon::before {
-    content: "📖"; /* Книга */
+    content: "📖"; 
 }
 
-/* 2. TEOREMA (Теорема) - Колір #f4c96c */
+/* --- TEOREMA (#f4c96c) --- */
 .callout[data-callout="teorema"] {
-    border-left-color: #f4c96c !important;
-    background-color: rgba(244, 201, 108, 0.15) !important;
+    /* Колір #f4c96c з прозорістю 10% */
+    background-color: rgba(244, 201, 108, 0.1) !important;
+    border-left: 4px solid #f4c96c !important;
 }
 .callout[data-callout="teorema"] .callout-title {
-    color: #cda43b !important; /* Трохи темніший для читабельності тексту */
+    color: #f4c96c !important;
 }
 .callout[data-callout="teorema"] .callout-icon::before {
-    content: "📙"; /* Помаранчева книга */
+    content: "📙";
 }
 
-/* 3. VIDEO (Відео) - Колір #f8aaea */
+/* --- VIDEO (#f8aaea) --- */
 .callout[data-callout="video"] {
-    border-left-color: #f8aaea !important;
-    background-color: rgba(248, 170, 234, 0.15) !important;
+    /* Колір #f8aaea з прозорістю 10% */
+    background-color: rgba(248, 170, 234, 0.1) !important;
+    border-left: 4px solid #f8aaea !important;
 }
 .callout[data-callout="video"] .callout-title {
-    color: #d67ac5 !important;
+    color: #f8aaea !important;
 }
 .callout[data-callout="video"] .callout-icon::before {
-    content: "📹"; /* Камера */
+    content: "📹";
 }
 
-/* 4. FORMULA (Формула) - Колір #5059d7 */
+/* --- FORMULA (#5059d7) --- */
 .callout[data-callout="formula"] {
-    border-left-color: #5059d7 !important;
+    /* Колір #5059d7 з прозорістю 15% (трохи темніший, бо синій) */
     background-color: rgba(80, 89, 215, 0.15) !important;
+    border-left: 4px solid #5059d7 !important;
 }
 .callout[data-callout="formula"] .callout-title {
-    color: #5059d7 !important;
+    color: #7c83e8 !important; /* Трохи світліший за рамку, щоб читався на темному */
 }
 .callout[data-callout="formula"] .callout-icon::before {
-    content: "⚠️"; /* Знак уваги (badge-alert) */
+    content: "⚠️";
 }
 
-/* 5. LIGHT-PURPLE (Фіолетовий) - Колір #c580e5 */
+/* --- LIGHT-PURPLE (#c580e5) --- */
 .callout[data-callout="light-purple"] {
-    border-left-color: #c580e5 !important;
-    background-color: rgba(197, 128, 229, 0.15) !important;
+    background-color: rgba(197, 128, 229, 0.1) !important;
+    border-left: 4px solid #c580e5 !important;
 }
 .callout[data-callout="light-purple"] .callout-title {
-    color: #aa5dcb !important;
+    color: #c580e5 !important;
 }
 .callout[data-callout="light-purple"] .callout-icon::before {
-    content: "📝"; /* Листок з текстом */
+    content: "📝";
 }
 
-/* 6. LIGHT-YELLOW (Жовтий) - Колір #eaf093 */
+/* --- LIGHT-YELLOW (#eaf093) --- */
 .callout[data-callout="light-yellow"] {
-    border-left-color: #eaf093 !important;
-    background-color: rgba(234, 240, 147, 0.3) !important; /* Трохи насиченіший фон, бо жовтий дуже світлий */
+    background-color: rgba(234, 240, 147, 0.1) !important;
+    border-left: 4px solid #eaf093 !important;
 }
 .callout[data-callout="light-yellow"] .callout-title {
-    color: #8f9600 !important; /* Темніший жовтий для тексту, щоб очі не боліли */
+    color: #eaf093 !important;
 }
 .callout[data-callout="light-yellow"] .callout-icon::before {
-    content: "📝"; /* Листок з текстом */
+    content: "📝";
 }
 
-/* 7. LIGHT-GREEN (Зелений) - Колір #9de798 */
+/* --- LIGHT-GREEN (#9de798) --- */
 .callout[data-callout="light-green"] {
-    border-left-color: #9de798 !important;
-    background-color: rgba(157, 231, 152, 0.2) !important;
+    background-color: rgba(157, 231, 152, 0.1) !important;
+    border-left: 4px solid #9de798 !important;
 }
 .callout[data-callout="light-green"] .callout-title {
-    color: #4caf50 !important; /* Нормальний зелений для тексту */
+    color: #9de798 !important;
 }
 .callout[data-callout="light-green"] .callout-icon::before {
-    content: "📝"; /* Листок з текстом */
+    content: "✅";
 }
 
-/* Корекція кольору тексту всередині блоків (щоб завжди був чорним/темно-сірим для читабельності) */
-.callout[data-callout="term"],
-.callout[data-callout="teorema"],
-.callout[data-callout="video"],
-.callout[data-callout="formula"],
-.callout[data-callout="light-purple"],
-.callout[data-callout="light-yellow"],
-.callout[data-callout="light-green"] {
-    color: #222 !important;
+/* --- ВИПРАВЛЕННЯ ТЕКСТУ ВНУТРІ --- */
+/* Цей блок гарантує, що текст всередині блоків буде кольору основного тексту сайту,
+   а не зливатиметься з фоном */
+.callout-content {
+    color: inherit !important; 
+    opacity: 0.9;
 }
 }
