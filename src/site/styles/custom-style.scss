@@ -15,10 +15,10 @@ body {
     stroke: #333 !important;
 }
  /* =======================================================
-   ОБЕРЕЖНИЙ ДИЗАЙН CALLOUTS (СТИЛЬ OBSIDIAN)
+   МІНІМАЛІСТИЧНІ СТИЛІ (ТІЛЬКИ КОЛІР І ІКОНКА)
    ======================================================= */
 
-/* 1. Скидання стандартних іконок для твоїх типів блоків */
+/* 1. Приховуємо старі іконки */
 .callout[data-callout="term"] .callout-icon svg,
 .callout[data-callout="teorema"] .callout-icon svg,
 .callout[data-callout="video"] .callout-icon svg,
@@ -29,109 +29,80 @@ body {
     display: none !important;
 }
 
-/* Налаштування для нових іконок */
-.callout-icon {
-    font-style: normal;
-    margin-right: 8px;
-    font-size: 1.1em;
-    line-height: 1;
-}
-
-/* 2. НАЛАШТУВАННЯ КОЛЬОРІВ (HEX переведені в RGBA для прозорості) */
-
-/* --- TERM (#99b1cc) --- */
+/* 2. Налаштування TERM (Термін) */
 .callout[data-callout="term"] {
-    /* Колір #99b1cc з прозорістю 10% */
-    background-color: rgba(153, 177, 204, 0.1) !important;
-    border-left: 4px solid #99b1cc !important;
+    background-color: rgba(153, 177, 204, 0.1) !important; /* Прозорий фон */
 }
 .callout[data-callout="term"] .callout-title {
-    color: #99b1cc !important;
+    color: #99b1cc !important; /* Колір заголовка */
 }
 .callout[data-callout="term"] .callout-icon::before {
-    content: "📖"; 
+    content: "📖 "; /* Іконка */
 }
 
-/* --- TEOREMA (#f4c96c) --- */
+/* 3. Налаштування TEOREMA */
 .callout[data-callout="teorema"] {
-    /* Колір #f4c96c з прозорістю 10% */
     background-color: rgba(244, 201, 108, 0.1) !important;
-    border-left: 4px solid #f4c96c !important;
 }
 .callout[data-callout="teorema"] .callout-title {
     color: #f4c96c !important;
 }
 .callout[data-callout="teorema"] .callout-icon::before {
-    content: "📙";
+    content: "📙 ";
 }
 
-/* --- VIDEO (#f8aaea) --- */
+/* 4. Налаштування VIDEO */
 .callout[data-callout="video"] {
-    /* Колір #f8aaea з прозорістю 10% */
     background-color: rgba(248, 170, 234, 0.1) !important;
-    border-left: 4px solid #f8aaea !important;
 }
 .callout[data-callout="video"] .callout-title {
     color: #f8aaea !important;
 }
 .callout[data-callout="video"] .callout-icon::before {
-    content: "📹";
+    content: "📹 ";
 }
 
-/* --- FORMULA (#5059d7) --- */
+/* 5. Налаштування FORMULA */
 .callout[data-callout="formula"] {
-    /* Колір #5059d7 з прозорістю 15% (трохи темніший, бо синій) */
     background-color: rgba(80, 89, 215, 0.15) !important;
-    border-left: 4px solid #5059d7 !important;
 }
 .callout[data-callout="formula"] .callout-title {
-    color: #7c83e8 !important; /* Трохи світліший за рамку, щоб читався на темному */
+    color: #7c83e8 !important;
 }
 .callout[data-callout="formula"] .callout-icon::before {
-    content: "⚠️";
+    content: "⚠️ ";
 }
 
-/* --- LIGHT-PURPLE (#c580e5) --- */
+/* 6. Налаштування LIGHT-PURPLE */
 .callout[data-callout="light-purple"] {
     background-color: rgba(197, 128, 229, 0.1) !important;
-    border-left: 4px solid #c580e5 !important;
 }
 .callout[data-callout="light-purple"] .callout-title {
     color: #c580e5 !important;
 }
 .callout[data-callout="light-purple"] .callout-icon::before {
-    content: "📝";
+    content: "📝 ";
 }
 
-/* --- LIGHT-YELLOW (#eaf093) --- */
+/* 7. Налаштування LIGHT-YELLOW */
 .callout[data-callout="light-yellow"] {
     background-color: rgba(234, 240, 147, 0.1) !important;
-    border-left: 4px solid #eaf093 !important;
 }
 .callout[data-callout="light-yellow"] .callout-title {
     color: #eaf093 !important;
 }
 .callout[data-callout="light-yellow"] .callout-icon::before {
-    content: "📝";
+    content: "📝 ";
 }
 
-/* --- LIGHT-GREEN (#9de798) --- */
+/* 8. Налаштування LIGHT-GREEN */
 .callout[data-callout="light-green"] {
     background-color: rgba(157, 231, 152, 0.1) !important;
-    border-left: 4px solid #9de798 !important;
 }
 .callout[data-callout="light-green"] .callout-title {
     color: #9de798 !important;
 }
 .callout[data-callout="light-green"] .callout-icon::before {
-    content: "✅";
-}
-
-/* --- ВИПРАВЛЕННЯ ТЕКСТУ ВНУТРІ --- */
-/* Цей блок гарантує, що текст всередині блоків буде кольору основного тексту сайту,
-   а не зливатиметься з фоном */
-.callout-content {
-    color: inherit !important; 
-    opacity: 0.9;
+    content: "✅ ";
 }
 }
