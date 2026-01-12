@@ -14,21 +14,41 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% endfor %}
 
     <style>
-      /* --- 1. ПОВЕРТАЄМО СТАНДАРТНИЙ ВИГЛЯД ТЕКСТУ --- */
-      /* Прибираємо мої попередні "гігантські" розширення. 
-         Тепер текст буде стандартної ширини, як у книзі. */
+      /* --- 1. АГРЕСИВНЕ ПРИХОВУВАННЯ МЕНЮ --- */
+      /* Цей контейнер буде виїжджати зліва */
+      #slide-out-menu {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 300px;
+          height: 100vh; /* На всю висоту екрана */
+          background-color: var(--background-primary);
+          border-right: 1px solid var(--background-modifier-border);
+          z-index: 9999; /* Поверх усього */
+          
+          /* КЛЮЧОВИЙ МОМЕНТ: Ховаємо меню за межі екрана */
+          transform: translateX(-100%); 
+          transition: transform 0.3s ease-in-out;
+          
+          overflow-y: auto; /* Прокрутка всередині меню */
+          padding-top: 60px; /* Відступ під кнопку закриття/відкриття */
+          box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      }
 
-      /* --- 2. СТИЛІ ДЛЯ ВИЇЗДНОГО МЕНЮ --- */
-      
-      /* Кнопка відкриття меню (завжди видима зліва зверху) */
-      #my-sidebar-toggle {
+      /* Клас, який додає JS, щоб показати меню */
+      #slide-out-menu.is-visible {
+          transform: translateX(0);
+      }
+
+      /* --- 2. КНОПКА МЕНЮ (Завжди зверху зліва) --- */
+      #menu-toggle-btn {
           position: fixed;
           top: 15px;
           left: 15px;
-          z-index: 1000;
+          z-index: 10000; /* Вище ніж саме меню */
           background: var(--background-secondary);
-          border: 1px solid var(--background-modifier-border);
           color: var(--text-normal);
+          border: 1px solid var(--background-modifier-border);
           padding: 8px 12px;
           border-radius: 5px;
           cursor: pointer;
@@ -37,102 +57,78 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
           align-items: center;
           gap: 5px;
       }
-      #my-sidebar-toggle:hover {
+      #menu-toggle-btn:hover {
           background: var(--background-modifier-hover);
       }
 
-      /* Саме меню (спочатку сховане за лівою межею екрана) */
-      .custom-sidebar {
-          position: fixed;
-          top: 0;
-          left: -320px; /* Сховано */
-          width: 300px;
-          height: 100%;
-          background: var(--background-primary);
-          border-right: 1px solid var(--background-modifier-border);
-          z-index: 999;
-          transition: left 0.3s ease; /* Анімація виїзду */
-          overflow-y: auto;
-          box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-          padding-top: 60px; /* Місце, щоб не перекривати кнопку */
-      }
-
-      /* Клас, який ми додамо через JS, щоб показати меню */
-      .custom-sidebar.open {
-          left: 0;
-      }
-
-      /* Назва "Курс Python" всередині меню */
-      .sidebar-site-header {
-          padding: 0 20px 15px 20px;
-          font-size: 1.4em;
-          font-weight: bold;
-          border-bottom: 1px solid var(--background-modifier-border);
-          margin-bottom: 10px;
-      }
-      .sidebar-site-header a {
-          text-decoration: none;
-          color: var(--text-normal);
-      }
-
-      /* Затемнення фону при відкритому меню (по бажанню) */
-      .sidebar-overlay {
-          display: none;
-          position: fixed;
-          top: 0; left: 0; right: 0; bottom: 0;
-          background: rgba(0,0,0,0.5);
-          z-index: 998;
-      }
-      .sidebar-overlay.active {
-          display: block;
+      /* --- 3. ЦЕНТРУВАННЯ ТЕКСТУ (Щоб не було дірок зліва) --- */
+      body {
+          /* Скидаємо стандартну сітку, щоб вона не чекала на меню */
+          display: block !important; 
       }
       
-      /* Приховуємо стандартне місце під сайдбар, щоб текст був по центру */
-      .file-tree-sidebar {
-          display: none !important; 
+      main.content {
+          margin: 0 auto !important; /* Центруємо блок тексту */
+          max-width: 900px !important; /* Зручна ширина для читання */
+          width: 90% !important;
+          padding-top: 60px !important; /* Щоб текст не ліз під кнопку меню */
       }
+
+      /* --- 4. ЗАТЕМНЕННЯ ФОНУ --- */
+      #menu-overlay {
+          display: none;
+          position: fixed;
+          top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(0,0,0,0.5);
+          z-index: 9998;
+          backdrop-filter: blur(2px);
+      }
+      #menu-overlay.active {
+          display: block;
+      }
+
+      /* Стиль заголовка в меню */
+      .menu-site-header {
+          padding: 10px 20px;
+          font-size: 1.2em;
+          font-weight: bold;
+          border-bottom: 1px solid var(--background-modifier-border);
+      }
+      .menu-site-header a { text-decoration: none; color: var(--text-normal); }
     </style>
   </head>
 
   <body class="theme-{{meta.baseTheme}} markdown-preview-view markdown-rendered markdown-preview-section {{meta.bodyClasses}}">
     
-    {%include "components/notegrowthhistory.njk"%}
-
-    <button id="my-sidebar-toggle" onclick="toggleMySidebar()">
+    <button id="menu-toggle-btn" onclick="toggleMenu()">
         <i data-lucide="menu"></i> Меню
     </button>
 
-    <div id="my-sidebar-overlay" class="sidebar-overlay" onclick="toggleMySidebar()"></div>
+    <div id="menu-overlay" onclick="toggleMenu()"></div>
 
-    <nav id="my-custom-sidebar" class="custom-sidebar">
-        <div class="sidebar-site-header">
+    <div id="slide-out-menu">
+        <div class="menu-site-header">
              <a href="/">{{meta.siteName}}</a>
         </div>
         {%include "components/filetree.njk"%}
-    </nav>
-
-    {% if settings.dgEnableSearch === true %}
-      {%include "components/searchContainer.njk"%}
-    {% endif %}
+    </div>
 
     <main class="content cm-s-obsidian {{contentClasses}}">
       <header>
         {% if settings.dgShowInlineTitle === true %}
           <h1 data-note-icon="{% if noteIcon %}{{noteIcon}}{% else %}{{meta.noteIconsSettings.default}}{% endif %}">{% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}</h1>
         {% endif %}
+        
         <div class="header-meta">
           {% if settings.dgShowTags === true and tags %}
             <div class="header-tags">
               {% for tag in tags %}
                 {% if tag != 'gardenEntry' and tag !='note' %}
-                  <a class="tag" onclick="toggleTagSearch(this)">
-                    #{{tag}}
-                  </a>
+                  <a class="tag" onclick="toggleTagSearch(this)">#{{tag}}</a>
                 {% endif %}
               {% endfor %}
             </div>
           {% endif %}
-          
           {%- if meta.timestampSettings.showCreated or meta.timestampSettings.showUpdated -%}
           <div class="timestamps">
             {%- if meta.timestampSettings.showCreated and created -%}
@@ -144,56 +140,43 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
           </div>
           {%- endif -%}
         </div>
-      
-      {% for imp in dynamics.common.header %}
-        {% include imp %}
-      {% endfor %}
-      {% for imp in dynamics.notes.header %}
-        {% include imp %}
-      {% endfor %}
+        
+        {% for imp in dynamics.common.header %} {% include imp %} {% endfor %}
+        {% for imp in dynamics.notes.header %} {% include imp %} {% endfor %}
       </header>
       
-      {% for imp in dynamics.common.beforeContent %}
-        {% include imp %}
-      {% endfor %}
-      {% for imp in dynamics.notes.beforeContent %}
-        {% include imp %}
-      {% endfor %}
+      {% for imp in dynamics.common.beforeContent %} {% include imp %} {% endfor %}
+      {% for imp in dynamics.notes.beforeContent %} {% include imp %} {% endfor %}
       
       {{ content | hideDataview | taggify | link | safe}}
       
-      {% for imp in dynamics.common.afterContent %}
-        {% include imp %}
-      {% endfor %}
-      {% for imp in dynamics.notes.afterContent %}
-        {% include imp %}
-      {% endfor %}
+      {% for imp in dynamics.common.afterContent %} {% include imp %} {% endfor %}
+      {% for imp in dynamics.notes.afterContent %} {% include imp %} {% endfor %}
     </main>
 
     {%include "components/sidebar.njk"%}
 
-    {% if settings.dgLinkPreview === true %}
-      {%include "components/linkPreview.njk"%}
-    {% endif %}
+    {% if settings.dgLinkPreview === true %} {%include "components/linkPreview.njk"%} {% endif %}
     {% include "components/references.njk" %}
     {% include "components/timestamps.njk" %}
-    {% for imp in dynamics.common.footer %}
-      {% include imp %}
-    {% endfor %}
-    {% for imp in dynamics.notes.footer %}
-      {% include imp %}
-    {% endfor %}
+    {% for imp in dynamics.common.footer %} {% include imp %} {% endfor %}
+    {% for imp in dynamics.notes.footer %} {% include imp %} {% endfor %}
     {%include "components/lucideIcons.njk"%}
-    {% if contentClasses and "canvas-page" in contentClasses %}
-      {%include "components/canvasScript.njk"%}
-    {% endif %}
+    {% if contentClasses and "canvas-page" in contentClasses %} {%include "components/canvasScript.njk"%} {% endif %}
 
     <script>
-        function toggleMySidebar() {
-            const sidebar = document.getElementById('my-custom-sidebar');
-            const overlay = document.getElementById('my-sidebar-overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
+        function toggleMenu() {
+            const menu = document.getElementById('slide-out-menu');
+            const overlay = document.getElementById('menu-overlay');
+            
+            // Перемикаємо класи
+            if (menu.classList.contains('is-visible')) {
+                menu.classList.remove('is-visible');
+                overlay.classList.remove('active');
+            } else {
+                menu.classList.add('is-visible');
+                overlay.classList.add('active');
+            }
         }
     </script>
   </body>
