@@ -97,6 +97,11 @@ module.exports = async (data) => {
     styleSettingsCss,
     uiStrings,
     buildDate: new Date(),
+    
+    // --- ДОДАНО МНОЮ (ПРИМУСОВЕ УВІМКНЕННЯ МЕНЮ) ---
+    showFileTree: true,  // Увімкнути ліве меню (папки)
+    showToc: true,       // Увімкнути праве меню (зміст)
+    // ------------------------------------------------
   };
 
   return meta;
