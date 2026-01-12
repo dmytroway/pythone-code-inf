@@ -14,18 +14,82 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% endfor %}
 
     <style>
-      /* Цей блок розтягує контент на всю ширину */
-      body {
-          --line-width: 1400px !important; /* Максимальна ширина тексту */
-          --line-width-adaptive: 1400px !important;
+      /* --- 1. ПОВЕРТАЄМО СТАНДАРТНИЙ ВИГЛЯД ТЕКСТУ --- */
+      /* Прибираємо мої попередні "гігантські" розширення. 
+         Тепер текст буде стандартної ширини, як у книзі. */
+
+      /* --- 2. СТИЛІ ДЛЯ ВИЇЗДНОГО МЕНЮ --- */
+      
+      /* Кнопка відкриття меню (завжди видима зліва зверху) */
+      #my-sidebar-toggle {
+          position: fixed;
+          top: 15px;
+          left: 15px;
+          z-index: 1000;
+          background: var(--background-secondary);
+          border: 1px solid var(--background-modifier-border);
+          color: var(--text-normal);
+          padding: 8px 12px;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+      }
+      #my-sidebar-toggle:hover {
+          background: var(--background-modifier-hover);
+      }
+
+      /* Саме меню (спочатку сховане за лівою межею екрана) */
+      .custom-sidebar {
+          position: fixed;
+          top: 0;
+          left: -320px; /* Сховано */
+          width: 300px;
+          height: 100%;
+          background: var(--background-primary);
+          border-right: 1px solid var(--background-modifier-border);
+          z-index: 999;
+          transition: left 0.3s ease; /* Анімація виїзду */
+          overflow-y: auto;
+          box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+          padding-top: 60px; /* Місце, щоб не перекривати кнопку */
+      }
+
+      /* Клас, який ми додамо через JS, щоб показати меню */
+      .custom-sidebar.open {
+          left: 0;
+      }
+
+      /* Назва "Курс Python" всередині меню */
+      .sidebar-site-header {
+          padding: 0 20px 15px 20px;
+          font-size: 1.4em;
+          font-weight: bold;
+          border-bottom: 1px solid var(--background-modifier-border);
+          margin-bottom: 10px;
+      }
+      .sidebar-site-header a {
+          text-decoration: none;
+          color: var(--text-normal);
+      }
+
+      /* Затемнення фону при відкритому меню (по бажанню) */
+      .sidebar-overlay {
+          display: none;
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.5);
+          z-index: 998;
+      }
+      .sidebar-overlay.active {
+          display: block;
       }
       
-      main.content {
-          max-width: 1400px !important; /* Примусово розширюємо */
-          padding-left: 30px !important; /* Акуратний відступ зліва */
-          padding-right: 30px !important; /* Акуратний відступ справа */
-          width: 100% !important;
-          margin: 0 auto !important;
+      /* Приховуємо стандартне місце під сайдбар, щоб текст був по центру */
+      .file-tree-sidebar {
+          display: none !important; 
       }
     </style>
   </head>
@@ -33,14 +97,17 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
   <body class="theme-{{meta.baseTheme}} markdown-preview-view markdown-rendered markdown-preview-section {{meta.bodyClasses}}">
     
     {%include "components/notegrowthhistory.njk"%}
-    
-    <nav class="file-tree-sidebar">
-        <div style="padding: 15px 20px 10px 20px; font-weight: bold; font-size: 1.2em; border-bottom: 1px solid var(--background-modifier-border);">
-             <a href="/" style="text-decoration: none; color: var(--text-normal);">
-                {{meta.siteName}}
-             </a>
+
+    <button id="my-sidebar-toggle" onclick="toggleMySidebar()">
+        <i data-lucide="menu"></i> Меню
+    </button>
+
+    <div id="my-sidebar-overlay" class="sidebar-overlay" onclick="toggleMySidebar()"></div>
+
+    <nav id="my-custom-sidebar" class="custom-sidebar">
+        <div class="sidebar-site-header">
+             <a href="/">{{meta.siteName}}</a>
         </div>
-        
         {%include "components/filetree.njk"%}
     </nav>
 
@@ -120,5 +187,14 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% if contentClasses and "canvas-page" in contentClasses %}
       {%include "components/canvasScript.njk"%}
     {% endif %}
+
+    <script>
+        function toggleMySidebar() {
+            const sidebar = document.getElementById('my-custom-sidebar');
+            const overlay = document.getElementById('my-sidebar-overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+    </script>
   </body>
 </html>
