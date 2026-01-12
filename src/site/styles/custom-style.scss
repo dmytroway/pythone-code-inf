@@ -1,26 +1,17 @@
 body {
-  /* 3. ВИПРАВЛЕННЯ MERMAID (ДІАГРАМИ) */
+ /* Тільки виправлення фону для Mermaid */
 .mermaid {
-    background-color: #1e1e1e !important; /* Темний фон */
-    border: none !important;
-    margin: 0 auto;
+    background-color: transparent !important; /* Прозорий фон замість білого */
 }
+
+/* Якщо діаграма все ще має білий фон, спробуйте це: */
 .mermaid svg {
-    background-color: transparent !important;
+    background-color: transparent !important; 
 }
-/* Лінії та стрілки - світлі */
-.mermaid .edgePath .path, .mermaid .marker {
-    stroke: #e0e0e0 !important;
-    fill: #e0e0e0 !important;
-}
-/* Текст діаграм */
-.mermaid .node text, .mermaid .label {
-    fill: #e0e0e0 !important;
-    color: #e0e0e0 !important;
-}
-/* Рамки блоків у діаграмах */
-.mermaid .node rect, .mermaid .node circle, .mermaid .node polygon {
-    stroke: #e0e0e0 !important;
-    fill: #2d2d2d !important; /* Темна заливка фігур */
+
+/* Робимо лінії темними (або світлими, якщо у вас таки вийде темна тема) */
+/* Зараз ставимо темні, бо у вас поки світла тема */
+.mermaid .edgePath .path {
+    stroke: #333 !important;
 }
 }
