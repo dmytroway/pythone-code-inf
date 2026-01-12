@@ -20,9 +20,9 @@ module.exports = async (data) => {
   }
   let bodyClasses = [];
   let noteIconsSettings = {
-    filetree: false,
-    links: false,
-    title: false,
+    filetree: true,
+    links: true,
+    title: true,
     default: process.env.NOTE_ICON_DEFAULT,
   };
 
